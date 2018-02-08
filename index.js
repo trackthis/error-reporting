@@ -6,10 +6,10 @@ var slash = require('slashjs');
  * @param fname
  */
 var tter = module.exports = function( options ) {
-  if ( 'string' === typeof options ) options = { filename: options };
+  if ( 'string' === typeof options ) options = { scope: options };
   options              = options || {};
-  options.filename     = options.filename || '';
-  options.filehash     = slash(options.filename);
+  options.scope        = options.scope || '';
+  options.scopeHash    = slash(options.scope);
   options.report       = options.report || console.log;
   options.reportArr    = options.reportArr || null;
   options.level        = options.level || tter.level.INFO;
@@ -22,7 +22,7 @@ var tter = module.exports = function( options ) {
     if ('undefined' === typeof description ) { description = level ; level = options.defaultLevel; }
     if(isNaN(level)) level = tter.level[level.toUpperCase()] || tter.level.INFO;
     if ( level > options.level ) return;
-    var code = options.filehash + '.' + slash(description),
+    var code = options.scopeHash + '.' + slash(description),
         err  = { code: code, level: tter.level[level] };
     if (options.reportArr) options.reportArr.push(err);
     options.report(err);
