@@ -26,6 +26,7 @@ var tter = module.exports = function( options ) {
         err  = { code: code, level: tter.level[level] };
     if (options.reportArr) options.reportArr.push(err);
     options.report(err);
+    return description;
   }
 
   // Fork, to add some more options
