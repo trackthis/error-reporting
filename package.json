@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/trackthis/error-reporting/issues"
   },
-  "homepage": "https://github.com/trackthis/error-reporting#readme"
+  "homepage": "https://github.com/trackthis/error-reporting#readme",
+  "dependencies": {
+    "slashjs": "^1.0.0"
+  }
 }
