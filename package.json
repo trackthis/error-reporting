@@ -1,0 +1,19 @@
+{
+  "name": "trackthis-error-reporting",
+  "version": "0.0.1",
+  "description": "Easy-to-use error reporting & error code generation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trackthis/error-reporting.git"
+  },
+  "author": "Robin Bron <robin@finwo.nl>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/trackthis/error-reporting/issues"
+  },
+  "homepage": "https://github.com/trackthis/error-reporting#readme"
+}
