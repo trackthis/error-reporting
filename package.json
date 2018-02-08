@@ -1,6 +1,6 @@
 {
   "name": "trackthis-error-reporting",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Easy-to-use error reporting & error code generation",
   "main": "index.js",
   "scripts": {
