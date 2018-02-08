@@ -19,11 +19,11 @@ var tter = module.exports = function( options ) {
 
   // The reporter called by the 'client'
   function reporter( level, description ) {
-    if ('undefined' === typeof description ) { description = level ; level = options.defaultLevel; }
+    if ( 'undefined' === typeof description ) { description = level ; level = options.defaultLevel; }
     if(isNaN(level)) level = tter.level[level.toUpperCase()] || tter.level.INFO;
-    if ( level > options.level ) return;
+    if ( level > options.level ) return description;
     var code = options.scopeHash + '.' + slash(description),
-        err  = { code: code, level: tter.level[level] };
+        err  = { code: code, level: tter.level[level], description: description };
     if (options.reportArr) options.reportArr.push(err);
     options.report(err);
     return description;
