@@ -10,6 +10,45 @@ npm install --save trackthis-error-reporting
 ## Usage
 
 ```js
+
+// Load the module
+var tter     = require('trackthis-error-reporting');
+
+// Initialize a reporter with default values in scope 'scope'
+var reporter = tter('scope');
+
+// Use the reporter to log 'Hello World'
+// Outputs (console.log) { code: '2ML7WOXUP2NAM.26PZVO9P3TYEP', level: 'INFO', description: 'Hello World' }
+// Returns 'Hello World'
+reporter('Hello World');
+
+// Report with a custom level
+// Outputs (console.log) { code: '2ML7WOXUP2NAM.26PZVO9P3TYEP', level: 'FATAL', description: 'Hello World' }
+// Returns 'Hello World'
+reporter( tter.level.FATAL, 'Hello World' );
+
+// Initialize a reporter which saves the errors into an array of ours
+var logArr         = [],
+    customReporter = reporter.fork({ reportArr: logArr });
+
+// Outputs (console.log) { code: '2ML7WOXUP2NAM.26PZVO9P3TYEP', level: 'INFO', description: 'Hello World' }
+// Outputs (console.log) { code: '2ML7WOXUP2NAM.URTTQPNTWFPA' , level: 'INFO', description: 'foobar'      }
+// Returns 'Hello World'
+// Returns 'foobar'
+reporter( 'Hello World' );
+reporter( 'foobar' );
+
+// Outputs [ { code: '2ML7WOXUP2NAM.26PZVO9P3TYEP', level: 'INFO', description: 'Hello World' },
+//           { code: '2ML7WOXUP2NAM.URTTQPNTWFPA' , level: 'INFO', description: 'foobar'      }
+//         ]
+console.log(logArr);
+```
+
+## Examples
+
+Reporting an error for missing data
+
+```js
 // Create the reporter for this file
 // I suggest using the filename as scope (__filename in nodejs)
 var tter     = require('trackthis-error-reporting'),
