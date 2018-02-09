@@ -1,3 +1,7 @@
 build:
   environment:
     node: '8.9.4'
+
+checks:
+  node:
+    code_rating: true
