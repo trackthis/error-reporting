@@ -35,8 +35,8 @@ var logArr         = [],
 // Outputs (console.log) { code: '2ML7WOXUP2NAM.URTTQPNTWFPA' , level: 'INFO', description: 'foobar'      }
 // Returns 'Hello World'
 // Returns 'foobar'
-reporter( 'Hello World' );
-reporter( 'foobar' );
+customReporter( 'Hello World' );
+customReporter( 'foobar' );
 
 // Outputs [ { code: '2ML7WOXUP2NAM.26PZVO9P3TYEP', level: 'INFO', description: 'Hello World' },
 //           { code: '2ML7WOXUP2NAM.URTTQPNTWFPA' , level: 'INFO', description: 'foobar'      }
