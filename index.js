@@ -17,7 +17,13 @@ var tter = module.exports = function( options ) {
   if(isNaN(options.level)) options.level = parseInt(tter.level[options.level.toUpperCase()]);
   if(isNaN(options.defaultLevel)) options.defaultLevel = parseInt(tter.level[options.defaultLevel.toUpperCase()]) || tter.level.INFO;
 
-  // The reporter called by the 'client'
+  /**
+   * The reporter function for the client
+   *
+   * @param level
+   * @param description
+   * @returns {*}
+   */
   function reporter( level, description ) {
     if ( 'undefined' === typeof description ) { description = level ; level = options.defaultLevel; }
     if(isNaN(level)) level = tter.level[level.toUpperCase()] || tter.level.INFO;
@@ -29,7 +35,12 @@ var tter = module.exports = function( options ) {
     return description;
   }
 
-  // Fork, to add some more options
+  /**
+   * Extend the current set of options & return a separate reporter for it
+   *
+   * @param extraOptions
+   * @returns {*}
+   */
   reporter.fork = function( extraOptions ) {
     var newOptions = Object.assign({},options);
     newOptions = Object.assign(newOptions,extraOptions);

@@ -17,6 +17,13 @@
   },
   "homepage": "https://github.com/trackthis/error-reporting#readme",
   "dependencies": {
-    "slashjs": "^1.0.0"
+    "co": "^4.6.0",
+    "docblock-parser": "^1.0.0",
+    "fs-extra": "^5.0.0",
+    "slashjs": "^1.0.0",
+    "through2": "^2.0.3"
+  },
+  "bin": {
+    "tter-generate-list": "./generate-error-list.js"
   }
 }
