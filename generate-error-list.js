@@ -107,8 +107,9 @@ processor
           text        = title.length === 2 ? title.pop() : '',
           relpath     = fileObject.filename.slice(pwd.length+1);
       title = title.shift();
-      process.stdout.write(slash(scope)+'.'+slash(description)+'\n');
+      process.stdout.write(slash(scope)+'.'+slash(description)+'  '+title+'\n');
       process.stdout.write('  '+relpath+':'+docblock.line+'\n');
+      process.stdout.write('  '+(text?'\n  ':'')+text.replace(/\n/g,'  \n')+'\n');
       process.stdout.write('\n');
     });
     cb();
