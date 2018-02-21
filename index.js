@@ -26,7 +26,7 @@ var tter = module.exports = function( options ) {
    */
   function reporter( level, description ) {
     if ( 'undefined' === typeof description ) { description = level ; level = options.defaultLevel; }
-    if(isNaN(level)) level = tter.level[level.toUpperCase()] || tter.level.INFO;
+    if(isNaN(level)) level = tter.level[level.toUpperCase()] || options.defaultLevel;
     if ( level > options.level ) return description;
     var code = options.scopeHash + '.' + slash(description),
         err  = { code: code, level: tter.level[level], description: description };
