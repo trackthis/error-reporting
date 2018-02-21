@@ -47,6 +47,48 @@ var tter = module.exports = function( options ) {
     return tter(newOptions);
   };
 
+  reporter.trace = function() {
+    var args = arguments;
+    return reporter.apply(reporter,[tter.level.TRACE].concat(Object.keys(args).map(function(k) {
+      return args[k];
+    })));
+  };
+
+  reporter.debug = function() {
+    var args = arguments;
+    return reporter.apply(reporter,[tter.level.DEBUG].concat(Object.keys(args).map(function(k) {
+      return args[k];
+    })));
+  };
+
+  reporter.info = function() {
+    var args = arguments;
+    return reporter.apply(reporter,[tter.level.INFO].concat(Object.keys(args).map(function(k) {
+      return args[k];
+    })));
+  };
+
+  reporter.warn = reporter.warning = function() {
+    var args = arguments;
+    return reporter.apply(reporter,[tter.level.WARN].concat(Object.keys(args).map(function(k) {
+      return args[k];
+    })));
+  };
+
+  reporter.err = reporter.error = function() {
+    var args = arguments;
+    return reporter.apply(reporter,[tter.level.ERROR].concat(Object.keys(args).map(function(k) {
+      return args[k];
+    })));
+  };
+
+  reporter.fatal = function() {
+    var args = arguments;
+    return reporter.apply(reporter,[tter.level.FATAL].concat(Object.keys(args).map(function(k) {
+      return args[k];
+    })));
+  };
+
   return reporter;
 };
 
