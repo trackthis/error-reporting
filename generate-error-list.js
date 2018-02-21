@@ -105,8 +105,9 @@ processor
           description = docblock.tags.description,
           title       = docblock.text.split('\n\n',2),
           text        = title.length === 2 ? title.pop() : '',
-          relpath     = fileObject.filename.slice(pwd.length+1);
+          relpath     = fileObject.filename.slice(pwd.length+1).replace(/\\/g,'/');
       title = title.shift();
+      scope = scope.replace(/\[relpath\]/g,relpath);
       process.stdout.write(slash(scope)+'.'+slash(description)+'  '+title+'\n');
       process.stdout.write('  '+relpath+':'+docblock.line+'\n');
       process.stdout.write('  '+(text?'\n  ':'')+text.replace(/\n/g,'  \n')+'\n');
