@@ -1,6 +1,12 @@
 # error-reporting
 Easy-to-use error reporting
 
+[![npm](https://img.shields.io/npm/v/trackthis-error-reporting.svg?style=flat-square)](https://npmjs.com/package/trackthis-error-reporting/)
+[![Scrutinizer Build](https://img.shields.io/scrutinizer/build/g/trackthis/error-reporting.svg?style=flat-square)](https://scrutinizer-ci.com/g/trackthis/error-reporting/)
+[![Scrutinizer](https://img.shields.io/scrutinizer/g/trackthis/error-reporting.svg?style=flat-square)](https://scrutinizer-ci.com/g/trackthis/error-reporting/)
+[![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/trackthis/error-reporting.svg?style=flat-square)](https://scrutinizer-ci.com/g/trackthis/error-reporting/)
+[![npm](https://img.shields.io/npm/l/trackthis-error-reporting.svg?style=flat-square)](https://npmjs.com/package/trackthis-error-reporting/)
+
 ## Installation
 
 ```bash
