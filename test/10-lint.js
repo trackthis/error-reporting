@@ -6,7 +6,6 @@ var path   = require('path'),
 global.approot = path.dirname(__dirname);
 global.co      = require('co');
 global.Promise = require('bluebird');
-global.config  = false;
 
 // Other libraries
 var JSHINT = require('jshint').JSHINT,
@@ -26,7 +25,6 @@ suite.addTest(new Test('Verifying file list',function() {
 
 // Generate the file list
 co(function* () {
-  global.config = yield require('../config');
   files = (yield fs.scandir(approot))
     .filter(function (filename) {
       if ( filename.substr(-3) !== '.js' ) return false;
