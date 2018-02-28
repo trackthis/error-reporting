@@ -7,6 +7,9 @@ global.approot = path.dirname(__dirname);
 global.co      = require('co');
 global.Promise = require('bluebird');
 
+// Include helpers
+require('./helpers');
+
 // Other libraries
 var JSHINT = require('jshint').JSHINT,
     files  = [];
