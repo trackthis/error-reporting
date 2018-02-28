@@ -14,8 +14,14 @@ var tter = module.exports = function( options ) {
   options.reportArr    = options.reportArr || null;
   options.level        = options.level || tter.level.INFO;
   options.defaultLevel = options.defaultLevel || tter.level.INFO;
-  if(isNaN(options.level)) options.level = parseInt(tter.level[options.level.toUpperCase()]);
-  if(isNaN(options.defaultLevel)) options.defaultLevel = parseInt(tter.level[options.defaultLevel.toUpperCase()]) || tter.level.INFO;
+
+  if(isNaN(options.level)) {
+    options.level = parseInt(tter.level[options.level.toUpperCase()]);
+  }
+
+  if(isNaN(options.defaultLevel)) {
+    options.defaultLevel = parseInt(tter.level[options.defaultLevel.toUpperCase()]) || tter.level.INFO;
+  }
 
   /**
    * The reporter function for the client
@@ -30,7 +36,11 @@ var tter = module.exports = function( options ) {
     if ( level > options.level ) return description;
     var code = options.scopeHash + '.' + slash(description),
         err  = { code: code, level: tter.level[level], description: description };
-    if (options.reportArr) options.reportArr.push(err);
+
+    if (options.reportArr) {
+      options.reportArr.push(err);
+    }
+    
     options.report(err);
     return description;
   }
@@ -42,9 +52,10 @@ var tter = module.exports = function( options ) {
    * @returns {*}
    */
   reporter.fork = function( extraOptions ) {
-    var newOptions = Object.assign({},options);
-    newOptions = Object.assign(newOptions,extraOptions);
-    return tter(newOptions);
+    if ( 'string' === typeof extraOptions ) {
+      extraOptions = { scope: extraOptions };
+    }
+    return tter(Object.assign({},options,extraOptions));
   };
 
   reporter.trace = function() {
