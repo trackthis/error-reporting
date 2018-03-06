@@ -3,7 +3,7 @@ var slash = require('slashjs');
 /**
  * The module initializer
  *
- * @param fname
+ * @param options
  */
 var tter = module.exports = function( options ) {
   if ( 'string' === typeof options ) options = { scope: options };
@@ -14,8 +14,12 @@ var tter = module.exports = function( options ) {
   options.reportArr    = options.reportArr || null;
   options.level        = (!isNaN(options.level)) ? options.level : tter.level.INFO;
   options.defaultLevel = (!isNaN(options.defaultLevel)) ? options.defaultLevel : tter.level.INFO;
-  if(isNaN(options.level)) options.level = parseInt(tter.level[options.level.toUpperCase()]) || tter.level.INFO;
-  if(isNaN(options.defaultLevel)) options.defaultLevel = parseInt(tter.level[options.defaultLevel.toUpperCase()]) || tter.level.INFO;
+  if(isNaN(options.level)) {
+    options.level = parseInt(tter.level[options.level.toUpperCase()]) || tter.level.INFO;
+  }
+  if(isNaN(options.defaultLevel)) {
+    options.defaultLevel = parseInt(tter.level[options.defaultLevel.toUpperCase()]) || tter.level.INFO;
+  }
 
   /**
    * The reporter function for the client
@@ -25,7 +29,10 @@ var tter = module.exports = function( options ) {
    * @returns {*}
    */
   function reporter( level, description ) {
-    if ( 'undefined' === typeof description ) { description = level ; level = options.defaultLevel; }
+    if ( 'undefined' === typeof description ) { 
+      description = level; 
+      level = options.defaultLevel; 
+    }
     if(isNaN(level)) {
       if ( level.toUpperCase() in tter.level ) {
         level = tter.level[level.toUpperCase()];
@@ -33,10 +40,18 @@ var tter = module.exports = function( options ) {
         level = tter.level.INFO;
       }
     }
-    if ( level > options.level ) return description;
+    if ( level > options.level ) {
+      return description;
+    }
     var code = options.scopeHash + '.' + slash(description),
-        err  = { code: code, level: tter.level[level], description: description };
-    if (options.reportArr) options.reportArr.push(err);
+        err  = { 
+          code: code, 
+          level: tter.level[level], 
+          description: description 
+        };
+    if (options.reportArr) {
+      options.reportArr.push(err);
+    }
     options.report(err);
     return description;
   }
