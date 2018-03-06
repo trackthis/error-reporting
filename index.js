@@ -63,9 +63,10 @@ var tter = module.exports = function( options ) {
    * @returns {*}
    */
   reporter.fork = function( extraOptions ) {
-    var newOptions = Object.assign({},options);
-    newOptions = Object.assign(newOptions,extraOptions);
-    return tter(newOptions);
+    if ( 'string' === typeof extraOptions ) {
+      extraOptions = { scope: extraOptions };
+    }
+    return tter(Object.assign({},options,extraOptions));
   };
 
   reporter.trace = function() {

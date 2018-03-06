@@ -1,10 +1,11 @@
 {
   "name": "trackthis-error-reporting",
-  "version": "0.2.1",
+  "version": "0.5.2",
   "description": "Easy-to-use error reporting & error code generation",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha test/index.js && ./node_modules/.bin/nyc report --reporter=clover"
+    "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha test/* --sort && ./node_modules/.bin/nyc report --reporter=clover"
   },
   "repository": {
     "type": "git",
@@ -27,8 +28,10 @@
     "tter-generate-list": "./generate-error-list.js"
   },
   "devDependencies": {
+    "bluebird": "^3.5.1",
     "clover": "0.0.1",
     "co-mocha": "^1.2.2",
+    "jshint": "^2.9.5",
     "nyc": "^11.4.1"
   }
 }

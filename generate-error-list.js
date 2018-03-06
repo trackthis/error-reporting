@@ -59,7 +59,7 @@ processor
       })
       .catch(function(err) {
         cb(err);
-      })
+      });
   }))
 
   // Normalize the newlines
@@ -114,7 +114,7 @@ processor
       process.stdout.write('\n');
     });
     cb();
-  }))
+  }));
 
 
 // Scan for all files to process
@@ -128,5 +128,5 @@ fs.scandir(pwd)
   .then(function(files) {
     files.forEach(function(filename) {
       processor.push(filename);
-    })
+    });
   });

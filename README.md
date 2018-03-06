@@ -1,6 +1,12 @@
 # error-reporting
 Easy-to-use error reporting
 
+[![npm](https://img.shields.io/npm/v/trackthis-error-reporting.svg?style=flat-square)](https://npmjs.com/package/trackthis-error-reporting/)
+[![Scrutinizer Build](https://img.shields.io/scrutinizer/build/g/trackthis/error-reporting.svg?style=flat-square)](https://scrutinizer-ci.com/g/trackthis/error-reporting/)
+[![Scrutinizer](https://img.shields.io/scrutinizer/g/trackthis/error-reporting.svg?style=flat-square)](https://scrutinizer-ci.com/g/trackthis/error-reporting/)
+[![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/trackthis/error-reporting.svg?style=flat-square)](https://scrutinizer-ci.com/g/trackthis/error-reporting/)
+[![npm](https://img.shields.io/npm/l/trackthis-error-reporting.svg?style=flat-square)](https://npmjs.com/package/trackthis-error-reporting/)
+
 ## Installation
 
 ```bash
@@ -77,3 +83,9 @@ function fetchUser( request, response, resolve, reject ) {
   }
 }
 ```
+
+## Contributing
+
+First, look at the [issues page](https://github.com/trackthis/error-reporting/issues) to ensure your issue isn't already known. If it's not, you can create a new issue with a detailed description of what happened & how to reproduce the unexpected behavior.
+
+If you decide to take on the challenge of fixing a known (or unknown) issue, you can do so by sending in a pull request from your own fork of the project. Once it has been tested (manually for now) and approved, it will be merged into the master branch of the repository.
