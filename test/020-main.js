@@ -442,6 +442,17 @@ describe('\n\n ####### error reporting #######', function() {
       assert.equal(1, report.filterErrors().length);
     });
 
+    it('filterErrors [custom level]', function * () {
+      var errors = [],
+          report = reporter.fork({
+            reportArr : errors
+          });
+      report.debug('debug');
+      report.err('error');
+      report.fatal('fatal');
+      assert.equal(1, report.filterErrors('fatal').length);
+    });
+
     it('filterErrors [cyustom array]', function * () {
       var errors1 = [],
           errors2 = [],
@@ -454,19 +465,8 @@ describe('\n\n ####### error reporting #######', function() {
       report1.debug('debug');
       report2.debug('debug');
       report2.fatal('fatal');
-      assert.equal(0, report2.filterErrors(errors1).length);
-      assert.equal(1, report1.filterErrors(errors2).length);
-    });
-
-    it('filterErrors [custom level]', function * () {
-      var errors = [],
-          report = reporter.fork({
-            reportArr : errors
-          });
-      report.debug('debug');
-      report.err('error');
-      report.fatal('fatal');
-      assert.equal(1, report.filterErrors(null, 'fatal').length);
+      assert.equal(0, report2.filterErrors(null, errors1).length);
+      assert.equal(1, report1.filterErrors(null, errors2).length);
     });
 
     it('filterErrors [cyustom array, custom level]', function * () {
@@ -483,8 +483,8 @@ describe('\n\n ####### error reporting #######', function() {
       report1.debug('debug');
       report2.err('error');
       report2.fatal('fatal');
-      assert.equal(1, report2.filterErrors(errors1, 7).length);
-      assert.equal(1, report1.filterErrors(errors2, 1).length);
+      assert.equal(1, report2.filterErrors(7, errors1).length);
+      assert.equal(1, report1.filterErrors(1, errors2).length);
     });
 
   });

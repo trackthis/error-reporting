@@ -111,7 +111,7 @@ var tter = module.exports = function( options ) {
     })));
   };
 
-  reporter.filterErrors = function(reportArr, errLevel) {
+  reporter.filterErrors = function(errLevel, reportArr) {
     reportArr = reportArr || options.reportArr;
     errLevel  = errLevel  || options.defaultLevel;
     if (!reportArr) {
