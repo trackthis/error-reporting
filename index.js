@@ -3,7 +3,7 @@ var slash = require('slashjs');
 /**
  * The module initializer
  *
- * @param fname
+ * @param options
  */
 var tter = module.exports = function( options ) {
   if ( 'string' === typeof options ) options = { scope: options };
@@ -12,13 +12,11 @@ var tter = module.exports = function( options ) {
   options.scopeHash    = slash(options.scope);
   options.report       = options.report || console.log;
   options.reportArr    = options.reportArr || null;
-  options.level        = options.level || tter.level.INFO;
-  options.defaultLevel = options.defaultLevel || tter.level.INFO;
-
+  options.level        = (!isNaN(options.level)) ? options.level : tter.level.INFO;
+  options.defaultLevel = (!isNaN(options.defaultLevel)) ? options.defaultLevel : tter.level.INFO;
   if(isNaN(options.level)) {
-    options.level = parseInt(tter.level[options.level.toUpperCase()]);
+    options.level = parseInt(tter.level[options.level.toUpperCase()]) || tter.level.INFO;
   }
-
   if(isNaN(options.defaultLevel)) {
     options.defaultLevel = parseInt(tter.level[options.defaultLevel.toUpperCase()]) || tter.level.INFO;
   }
@@ -31,16 +29,29 @@ var tter = module.exports = function( options ) {
    * @returns {*}
    */
   function reporter( level, description ) {
-    if ( 'undefined' === typeof description ) { description = level ; level = options.defaultLevel; }
-    if(isNaN(level)) level = tter.level[level.toUpperCase()] || options.defaultLevel;
-    if ( level > options.level ) return description;
+    if ( 'undefined' === typeof description ) { 
+      description = level; 
+      level       = options.defaultLevel; 
+    }
+    if(isNaN(level)) {
+      if ( level.toUpperCase() in tter.level ) {
+        level = tter.level[level.toUpperCase()];
+      } else {
+        level = tter.level.INFO;
+      }
+    }
+    if ( level > options.level ) {
+      return description;
+    }
     var code = options.scopeHash + '.' + slash(description),
-        err  = { code: code, level: tter.level[level], description: description };
-
+        err  = { 
+          code        : code, 
+          level       : tter.level[level], 
+          description : description 
+        };
     if (options.reportArr) {
       options.reportArr.push(err);
     }
-    
     options.report(err);
     return description;
   }
@@ -98,6 +109,20 @@ var tter = module.exports = function( options ) {
     return reporter.apply(reporter,[tter.level.FATAL].concat(Object.keys(args).map(function(k) {
       return args[k];
     })));
+  };
+
+  reporter.filterErrors = function(errLevel, reportArr) {
+    reportArr = reportArr || options.reportArr;
+    errLevel  = errLevel  || options.defaultLevel;
+    if (!reportArr) {
+      return 0;
+    }
+    if (typeof errLevel == 'string') {
+      errLevel = tter.level[errLevel.toUpperCase()] || options.defaultLevel;
+    }
+    return reportArr.filter(function (err) {
+      return tter.level[err.level.toUpperCase()] <= errLevel;
+    });
   };
 
   return reporter;
