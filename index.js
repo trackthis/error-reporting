@@ -111,6 +111,20 @@ var tter = module.exports = function( options ) {
     })));
   };
 
+  reporter.filterErrors = function(reportArr, errLevel) {
+    reportArr = reportArr || options.reportArr;
+    errLevel  = errLevel  || options.defaultLevel;
+    if (!reportArr) {
+      return 0;
+    }
+    if (typeof errLevel == 'string') {
+      errLevel = tter.level[errLevel.toUpperCase()] || options.defaultLevel;
+    }
+    return reportArr.filter(function (err) {
+      return tter.level[err.level.toUpperCase()] <= errLevel;
+    });
+  };
+
   return reporter;
 };
 

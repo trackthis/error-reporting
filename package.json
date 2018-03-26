@@ -4,7 +4,6 @@
   "description": "Easy-to-use error reporting & error code generation",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha test/index.js && ./node_modules/.bin/nyc report --reporter=clover"
     "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha test/* --sort && ./node_modules/.bin/nyc report --reporter=clover"
   },
   "repository": {
