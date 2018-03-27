@@ -9,8 +9,7 @@ require('co-mocha');
 describe('creating reporter', function() {
       
   it('create new reporter (only scope)', function * () {
-    var errors   = [],
-        reporter = tter('test/index.js');
+    var reporter = tter('test/index.js');
     reporter('error');
     assert.notEqual(reporter, undefined);
   });

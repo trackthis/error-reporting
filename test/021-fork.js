@@ -20,8 +20,7 @@ describe('fork', function() {
   });
     
   it('fork reporter (only scope)', function * () {
-    var errors   = [],
-        reporter = baseReporter.fork('test/index.js');
+    var reporter = baseReporter.fork('test/index.js');
     reporter('error');
     assert.equal(baseArray.length, 2);
   });

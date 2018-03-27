@@ -6,7 +6,7 @@ var slash = require('slashjs');
  * @param options
  */
 var tter = module.exports = function( options ) {
-  if ( 'string' === typeof options ) options = { scope: options };
+  if ( 'string' === typeof options ) { options = { scope: options }; }
   options              = options || {};
   options.scope        = options.scope || '';
   options.scopeHash    = slash(options.scope);
