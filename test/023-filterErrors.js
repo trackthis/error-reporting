@@ -70,6 +70,7 @@ describe('filterErrors function', function() {
     report2.fatal('fatal');
     assert.equal(1, report2.filterErrors(7, errors1).length);
     assert.equal(1, report1.filterErrors(1, errors2).length);
+    assert.equal(2, report1.filterErrors('no-level', errors2).length);
   });
 
   /* end test */
