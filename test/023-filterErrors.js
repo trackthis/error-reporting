@@ -54,7 +54,7 @@ describe('filterErrors function', function() {
     assert.equal(1, report1.filterErrors(null, errors2).length);
   });
 
-  it('filterErrors [cyustom array, custom level]', function * () {
+  it('filterErrors [custom array, custom level]', function * () {
     var errors1 = [],
         errors2 = [],
         report1 = reporter.fork({
