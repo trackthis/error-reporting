@@ -28,17 +28,19 @@ suite.addTest(new Test('Verifying file list',function() {
 
 // Generate the file list
 co(function* () {
+  /** global: approot */
   files = (yield fs.scandir(approot))
     .filter(function (filename) {
-      if ( filename.substr(-3) !== '.js' ) return false;
-      if ( filename.substr(-7) === '.min.js' ) return false;
-      if ( filename.indexOf(path.sep + '.idea' + path.sep) >= 0 ) return false;
-      if ( filename.indexOf(path.sep + '.git' + path.sep) >= 0 ) return false;
-      if ( filename.indexOf(path.sep + 'node_modules' + path.sep) >= 0 ) return false;
+      if ( filename.substr(-3) !== '.js' ) { return false; }
+      if ( filename.substr(-7) === '.min.js' ) { return false; }
+      if ( filename.indexOf(path.sep + '.idea' + path.sep) >= 0 ) { return false; }
+      if ( filename.indexOf(path.sep + '.git' + path.sep) >= 0 ) { return false; }
+      if ( filename.indexOf(path.sep + 'node_modules' + path.sep) >= 0 ) { return false; }
       return true;
     });
 
   files.forEach(function(filename) {
+    /** global: approot */
     suite.addTest(new Test('Lint ' + filename.substr(approot.length), function(done) {
       co(function*() {
 
@@ -77,6 +79,7 @@ co(function* () {
 
         // Success!
         done();
+        return null;
       });
     }));
   });
