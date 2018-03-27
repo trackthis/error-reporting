@@ -7,26 +7,48 @@ var co       = require('co'),
 
 require('co-mocha');
 
-describe('\n\n ####### level functions #######', function() {
+describe('different level reporting', function() {
     
   describe('custom level report', function() {
-
-    it('report level OFF', function * () {
-      var errors = [],
-          report = tter({
-            scope     : 'test/index.js',
-            reportArr : errors
-          });
-      report('OFF', 'error');
-      assert.equal(errors.length, 1);
-      assert.equal(errors[0].level, 'OFF');
-    });
     
     it('new reporter ready to be forked by below tests (max level 7)', function * () {
       reporter = tter({
         scope : 'test/index.js',
         level : 7
       });
+    });
+
+    it('report level \'no-level\'', function * () {
+      var errors = [],
+          report = reporter.fork({
+            scope     : 'test/index.js',
+            reportArr : errors
+          });
+      report('no-level', 'error');
+      assert.equal(errors.length, 1);
+      assert.equal(errors[0].level, 'INFO');
+    });
+
+    it('report level 8', function * () {
+      var errors = [],
+          report = reporter.fork({
+            scope     : 'test/index.js',
+            reportArr : errors
+          });
+      report(8, 'error');
+      assert.equal(errors.length, 1);
+      assert.equal(errors[0].level, 'INFO');
+    });
+
+    it('report level OFF', function * () {
+      var errors = [],
+          report = reporter.fork({
+            scope     : 'test/index.js',
+            reportArr : errors
+          });
+      report('OFF', 'error');
+      assert.equal(errors.length, 1);
+      assert.equal(errors[0].level, 'OFF');
     });
 
     it('report level 0', function * () {
@@ -184,7 +206,7 @@ describe('\n\n ####### level functions #######', function() {
   
   describe('shortcut report functions', function() {
     
-    it('base reporter level 7', function * () {
+    it('new reporter ready to be forked by below tests (max level 7)', function * () {
       reporter = tter({
         scope : 'test/index.js',
         level : 7
@@ -273,4 +295,5 @@ describe('\n\n ####### level functions #######', function() {
 
   });
 
+  /* end test */
 });

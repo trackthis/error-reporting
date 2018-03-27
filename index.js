@@ -12,13 +12,13 @@ var tter = module.exports = function( options ) {
   options.scopeHash    = slash(options.scope);
   options.report       = options.report || console.log;
   options.reportArr    = options.reportArr || null;
-  options.level        = (!isNaN(options.level)) ? options.level : tter.level.INFO;
-  options.defaultLevel = (!isNaN(options.defaultLevel)) ? options.defaultLevel : tter.level.INFO;
-  if(isNaN(options.level)) {
-    options.level = parseInt(tter.level[options.level.toUpperCase()]) || tter.level.INFO;
+  options.level        = (options.level in tter.level || options.level) ? options.level : tter.level.INFO;
+  options.defaultLevel = (options.defaultLevel in tter.level || options.defaultLevel) ? options.defaultLevel : tter.level.INFO;
+  if(typeof options.level === 'string') {
+    options.level = (options.level.toUpperCase() in tter.level) ? parseInt(tter.level[options.level.toUpperCase()]) : tter.level.INFO;
   }
-  if(isNaN(options.defaultLevel)) {
-    options.defaultLevel = parseInt(tter.level[options.defaultLevel.toUpperCase()]) || tter.level.INFO;
+  if(typeof options.defaultLevel === 'string') {
+    options.defaultLevel = (options.defaultLevel.toUpperCase() in tter.level) ? parseInt(tter.level[options.defaultLevel.toUpperCase()]) : tter.level.INFO;
   }
 
   /**
@@ -33,12 +33,15 @@ var tter = module.exports = function( options ) {
       description = level; 
       level       = options.defaultLevel; 
     }
-    if(isNaN(level)) {
-      if ( level.toUpperCase() in tter.level ) {
-        level = tter.level[level.toUpperCase()];
+    if(typeof level === 'string') {
+      if (level.toUpperCase() in tter.level) {
+        level = parseInt(tter.level[level.toUpperCase()]);
       } else {
         level = tter.level.INFO;
       }
+    }
+    if (!(level in tter.level)) {
+      level = tter.level.INFO;
     }
     if ( level > options.level ) {
       return description;
@@ -113,12 +116,20 @@ var tter = module.exports = function( options ) {
 
   reporter.filterErrors = function(errLevel, reportArr) {
     reportArr = reportArr || options.reportArr;
-    errLevel  = errLevel  || options.defaultLevel;
     if (!reportArr) {
-      return 0;
+      return [];
     }
+
     if (typeof errLevel == 'string') {
-      errLevel = tter.level[errLevel.toUpperCase()] || options.defaultLevel;
+      if (errLevel.toUpperCase() in tter.level) {
+        errLevel = tter.level[errLevel.toUpperCase()];
+      } else {
+        errLevel = options.defaultLevel;
+      }
+    } else {
+      if (!(errLevel in tter.level)) {
+        errLevel = options.defaultLevel;
+      }
     }
     return reportArr.filter(function (err) {
       return tter.level[err.level.toUpperCase()] <= errLevel;
