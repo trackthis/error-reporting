@@ -1,6 +1,8 @@
 # error-reporting
 Easy-to-use error reporting
 
+[![Codetree](https://codetree.com/images/managed-with-codetree.svg)](https://codetree.com/projects/gX1r)
+
 [![npm](https://img.shields.io/npm/v/trackthis-error-reporting.svg?style=flat-square)](https://npmjs.com/package/trackthis-error-reporting/)
 [![Scrutinizer Build](https://img.shields.io/scrutinizer/build/g/trackthis/error-reporting.svg?style=flat-square)](https://scrutinizer-ci.com/g/trackthis/error-reporting/)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/trackthis/error-reporting.svg?style=flat-square)](https://scrutinizer-ci.com/g/trackthis/error-reporting/)
