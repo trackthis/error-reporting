@@ -11,8 +11,8 @@ build:
     tests: true
     analysis:
       tests:
-      override:
-      - js-scrutinizer-run
+        override:
+        - js-scrutinizer-run
 
 
 checks:
