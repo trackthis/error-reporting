@@ -1,0 +1,7 @@
+[ver:1,total:2120]
+generate-error-list.js:1195,1535367600:1195,m
+.gtm/terminal.app:686,1535367600:686,r
+example.js:130,1535367600:130,m
+package.json:82,1535367600:82,m
+test/helpers/fs-scandir.js:15,1535367600:15,r
+test/010-lint.js:12,1535367600:12,r
