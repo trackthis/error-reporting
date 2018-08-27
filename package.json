@@ -1,6 +1,6 @@
 {
   "name": "trackthis-error-reporting",
-  "version": "0.6.1",
+  "version": "1.0.0",
   "description": "Easy-to-use error reporting & error code generation",
   "main": "index.js",
   "scripts": {
@@ -16,21 +16,19 @@
     "url": "https://github.com/trackthis/error-reporting/issues"
   },
   "homepage": "https://github.com/trackthis/error-reporting#readme",
-  "dependencies": {
-    "co": "^4.6.0",
-    "docblock-parser": "^1.0.0",
-    "fs-extra": "^5.0.0",
-    "slashjs": "^1.0.0",
-    "through2": "^2.0.3"
-  },
+  "dependencies": {},
   "bin": {
     "tter-generate-list": "./generate-error-list.js"
   },
   "devDependencies": {
     "bluebird": "^3.5.1",
-    "clover": "0.0.1",
+    "co": "^4.6.0",
     "co-mocha": "^1.2.2",
-    "jshint": "^2.9.5",
-    "nyc": "^11.4.1"
+    "docblock-parser": "^1.0.0",
+    "fs-extra": "^7.0.0",
+    "jshint": "^2.9.6",
+    "mocha": "^5.2.0",
+    "nyc": "^12.0.2",
+    "through2": "^2.0.3"
   }
 }

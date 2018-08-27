@@ -6,26 +6,8 @@ var co             = require('co'),
     fs             = require('fs-extra'),
     path           = require('path'),
     pwd            = process.cwd(),
-    slash          = require('slashjs'),
     Stream         = require('stream'),
     through        = require('through2');
-
-// Create useful scandir function
-fs.scandir = co.wrap(function*( dir ) {
-  var stat, filename, i, src = yield fs.readdir(dir);
-  var output = [];
-  for ( i in src ) {
-    if (!src.hasOwnProperty(i)) continue;
-    filename = path.join( dir, src[i] );
-    stat     = yield fs.stat( filename );
-    if ( stat.isDirectory() ) {
-      output = output.concat( yield fs.scandir( filename ) );
-    } else if ( stat.isFile() ) {
-      output.push( filename );
-    }
-  }
-  return output;
-});
 
 // Start of the processing stream
 var processor = new Stream.Readable();
@@ -39,9 +21,14 @@ var reg = {
 // Setup the processing
 processor
 
+  // Convert buffer to string
+  .pipe(through.obj(function( filename, enc, cb ) {
+    this.push(filename.toString(enc));
+    cb();
+  }))
+
   // Make sure it's a javascript file
   .pipe(through.obj(function(filename, enc, cb ) {
-    filename = filename.toString(enc);
     if ( filename.slice(-3).toLowerCase() === '.js' ) this.push(filename);
     cb();
   }))
@@ -92,7 +79,7 @@ processor
   // Skip files without interesting docblocks
   .pipe(through.obj(function( fileObject, enc, cb ) {
     fileObject.docblocks = fileObject.docblocks.filter(function(docblock) {
-      return docblock.tags.scope && docblock.tags.description;
+      return docblock.tags.scope;
     });
     if ( fileObject.docblocks.length ) this.push(fileObject);
     cb();
@@ -102,31 +89,42 @@ processor
   .pipe(through.obj(function( fileObject, enc, cb ) {
     fileObject.docblocks.forEach(function(docblock) {
       var scope       = docblock.tags.scope,
-          description = docblock.tags.description,
-          title       = docblock.text.split('\n\n',2),
-          text        = title.length === 2 ? title.pop() : '',
+          parts       = docblock.text.split("\n\n"),
+          title       = parts.shift(),
+          description = parts.join("\n\n"),
           relpath     = fileObject.filename.slice(pwd.length+1).replace(/\\/g,'/');
-      title = title.shift();
       scope = scope.replace(/\[relpath\]/g,relpath);
-      process.stdout.write(slash(scope)+'.'+slash(description)+'  '+title+'\n');
-      process.stdout.write('  '+relpath+':'+docblock.line+'\n');
-      process.stdout.write('  '+(text?'\n  ':'')+text.replace(/\n/g,'  \n')+'\n');
+
+      process.stdout.write(relpath+":"+docblock.line+" -- ["+(docblock.tags.level?(docblock.tags.level.toUpperCase()+':'):'')+scope+"] "+title+"  "+"\n");
+      process.stdout.write("   "+description.split("\n").join("\n   ")+"\n");
       process.stdout.write('\n');
     });
     cb();
   }));
 
+// Recursive push files to the processor
+var toProcess = fs.readdirSync(pwd).map((rp)=>pwd+path.sep+rp);
+(function next() {
+  var absolutePath = toProcess.shift();                      // Fetch the first to process
+  if(!absolutePath) return;                                  // false-ish = done
+  var parts = absolutePath.split(path.sep);                  // Split the path
+  if(parts[parts.length-1].substr(0,1)==='.') return next(); // To check for a dotfile here
 
-// Scan for all files to process
-// Push them to the processor afterwards
-fs.scandir(pwd)
-  .then(function(files) {
-    return files.filter(function(filename) {
-      return filename.indexOf('/.') === -1 ;
-    });
-  })
-  .then(function(files) {
-    files.forEach(function(filename) {
-      processor.push(filename);
-    });
+  // Stat the path
+  fs.stat(absolutePath, function(err, stat) {
+    if(err) return next();
+    if(!stat) return next();
+
+    if( stat.isDirectory() ) {
+      // Directories need to be scanned
+      fs.readdirSync(absolutePath).forEach(function(entry) {
+        toProcess.push(parts.concat([entry]).join(path.sep));
+      });
+      return next();
+    } else if ( stat.isFile() ) {
+      // Files are send to the processor
+      processor.push(absolutePath);
+      return next();
+    }
   });
+})();

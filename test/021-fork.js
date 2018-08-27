@@ -46,31 +46,33 @@ describe('fork', function() {
     assert.equal(errors.length, 2);
   });
 
-  it('fork reporter (level 2)', function * () {
-    var errors   = [],
-        reporter = baseReporter.fork({
-          reportArr : errors,
-          level     : 3
-        });
-    reporter(2, 'error');
-    assert.equal(errors.length, 1);
-    reporter(4, 'error');
-    assert.equal(errors.length, 1);
-    assert.equal(errors[0].level, 'ERROR');
-  });
+  // // REMOVED FUNCTIONALITY
+  // it('fork reporter (level 2)', function * () {
+  //   var errors   = [],
+  //       reporter = baseReporter.fork({
+  //         reportArr : errors,
+  //         level     : 3
+  //       });
+  //   reporter(2, 'error');
+  //   assert.equal(errors.length, 1);
+  //   reporter(4, 'error');
+  //   assert.equal(errors.length, 1);
+  //   assert.equal(errors[0].level, 'ERROR');
+  // });
 
-  it('fork reporter (level \'error\')', function * () {
-    var errors   = [],
-        reporter = baseReporter.fork({
-          reportArr : errors,
-          level     : 'error'
-        });
-    reporter(3, 'error');
-    assert.equal(errors.length, 0);
-    reporter(1, 'error');
-    assert.equal(errors.length, 1);
-    assert.equal(errors[0].level, 'FATAL');
-  });
+  // // REMOVED FUNCTIONALITY
+  // it('fork reporter (level \'error\')', function * () {
+  //   var errors   = [],
+  //       reporter = baseReporter.fork({
+  //         reportArr : errors,
+  //         level     : 'error'
+  //       });
+  //   reporter(3, 'error');
+  //   assert.equal(errors.length, 0);
+  //   reporter(1, 'error');
+  //   assert.equal(errors.length, 1);
+  //   assert.equal(errors[0].level, 'FATAL');
+  // });
     
   it('fork reporter (defaultLevel 3)', function * () {
     var errors   = [],
@@ -83,7 +85,7 @@ describe('fork', function() {
     assert.equal(errors[0].level, 'WARN');
   });
 
-  it('fork reporter (defaultLEvel \'warn\')', function * () {
+  it('fork reporter (defaultLevel \'warn\')', function * () {
     var errors   = [],
         reporter = baseReporter.fork({
           reportArr    : errors,
@@ -94,15 +96,11 @@ describe('fork', function() {
     assert.equal(errors[0].level, 'WARN');
   });
 
-  it('fork reporter (custom report funciton)', function * () {
+  it('fork reporter (custom report function)', function * () {
     var errors   = [],
         reporter = baseReporter.fork({
-          reportArr : errors,
-          report    : function () {
-            errors.push({
-              test : 'test'
-            });
-          }
+          reportArr: errors,
+          reporters: [ function () { errors.push({test: 'test'}); } ],
         });
     reporter('error');
     assert.equal(errors.length, 2);
