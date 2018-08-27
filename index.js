@@ -41,7 +41,7 @@ var main = module.exports = function( options ) {
     // console.log(options);
     if(options.reportArr) options.reportArr.push(msg);
     options.reporters.forEach(function(reporter) {
-      if ( reporter.level <= message.level ) return;
+      if ( reporter.level < message.level ) return;
       reporter.callback(msg);
     });
   }
@@ -88,11 +88,13 @@ var main = module.exports = function( options ) {
   // Filtering errors
   reporter.filterErrors = function(errLevel, reportArr) {
     reportArr = reportArr || options.reportArr;
+    errLevel  = errLevel || options.defaultLevel;
     if(!reportArr) return [];
     if('string'===typeof errLevel) errLevel = main.level[errLevel.toUpperCase()];
+    if('undefined'===typeof errLevel) errLevel = main.level.ALL;
     if(!errLevel) return [];
     return reportArr.filter(function(err) {
-      return errLevel > main.level[err.level.toUpperCase()];
+      return errLevel >= main.level[err.level.toUpperCase()];
     });
   };
 

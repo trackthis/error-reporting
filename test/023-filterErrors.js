@@ -14,7 +14,7 @@ describe('filterErrors function', function() {
   });
 
   it('filterErrors [no args]', function * () {
-    assert.equal(0, reporter.filterErrors().length);
+    assert.equal(reporter.filterErrors().length, 0);
   });
 
   it('filterErrors [no args]', function * () {
@@ -24,7 +24,7 @@ describe('filterErrors function', function() {
         });
     report.debug('debug');
     report.fatal('fatal');
-    assert.equal(1, report.filterErrors().length);
+    assert.equal(report.filterErrors().length, 1);
   });
 
   it('filterErrors [custom level]', function * () {
@@ -35,7 +35,7 @@ describe('filterErrors function', function() {
     report.debug('debug');
     report.err('error');
     report.fatal('fatal');
-    assert.equal(1, report.filterErrors('fatal').length);
+    assert.equal(report.filterErrors('fatal').length, 1);
   });
 
   it('filterErrors [custom array]', function * () {
@@ -50,8 +50,8 @@ describe('filterErrors function', function() {
     report1.debug('debug');
     report2.debug('debug');
     report2.fatal('fatal');
-    assert.equal(0, report2.filterErrors(null, errors1).length);
-    assert.equal(1, report1.filterErrors(null, errors2).length);
+    assert.equal(report2.filterErrors(null, errors1).length, 0);
+    assert.equal(report1.filterErrors(null, errors2).length, 1);
   });
 
   it('filterErrors [custom array, custom level]', function * () {
@@ -68,9 +68,9 @@ describe('filterErrors function', function() {
     report1.debug('debug');
     report2.err('error');
     report2.fatal('fatal');
-    assert.equal(1, report2.filterErrors(7, errors1).length);
-    assert.equal(1, report1.filterErrors(1, errors2).length);
-    assert.equal(2, report1.filterErrors('no-level', errors2).length);
+    assert.equal(report2.filterErrors(7, errors1).length, 1);
+    assert.equal(report1.filterErrors(1, errors2).length, 1);
+    assert.equal(report1.filterErrors('no-level', errors2).length, 2);
   });
 
   /* end test */
