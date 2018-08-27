@@ -100,7 +100,7 @@ describe('fork', function() {
     var errors   = [],
         reporter = baseReporter.fork({
           reportArr: errors,
-          reporters: [[ 'ALL', function () { errors.push({test: 'test'}); } ]],
+          reporters: [ function () { errors.push({test: 'test'}); } ],
         });
     reporter('error');
     assert.equal(errors.length, 2);

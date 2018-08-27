@@ -16,17 +16,30 @@ var main = module.exports = function( options ) {
   // Sanitize the reporters
   options.reporters = (options.reporters||[]).reduce(function(reporters,reporter) {
 
-    // Minimal sanitation
-    if(!reporter) return reporters;
-    if('object'!==typeof reporter) return reporters;
-    var result = reporter;
+    if('function' === typeof reporter) {
+      reporters.push({
+        level   : options.defaultLevel,
+        callback: reporter
+      });
+      return reporters;
+    }
 
-    // Array support
-    if( Array.isArray(reporter) && (reporter.length === 2) ) {
-      result = {
-        level   : reporter[0],
-        callback: reporter[1],
-      };
+    if('string'===typeof reporter) {
+      reporters.push({
+        level   : main.level[reporter.toUpperCase()],
+        callback: console.log
+      });
+      return reporters;
+    }
+
+    if ( 'object' !== typeof reporter ) {
+      return reporters;
+    }
+
+    var result = { level: reporter.level, callback: reporter.callback };
+    if ( Array.isArray(reporter) && ( reporter.length === 2 )) {
+      result.level    = reporter[0];
+      result.callback = reporter[1];
     }
 
     // Validate components
@@ -35,7 +48,7 @@ var main = module.exports = function( options ) {
     if('number'!==typeof result.level) return reporters;
 
     // Add to our list
-    reporters.push(reporter);
+    reporters.push(result);
     return reporters;
   },[]);
 
