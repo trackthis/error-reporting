@@ -55,7 +55,7 @@ var main = module.exports = function( options ) {
     if('number'===typeof level) level = main.level[level];
     if('string'!==typeof level) level = options.defaultLevel;
     if(!(level.toUpperCase() in main.level)) level = options.defaultLevel;
-    return reporter[level.toLowerCase()]({stack:cleanStack(new Error().stack),message});
+    return commonReport(level.toUpperCase(), {stack:cleanStack(new Error().stack),message});
   };
 
   // The common action for all levels
