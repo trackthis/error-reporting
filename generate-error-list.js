@@ -6,26 +6,8 @@ var co             = require('co'),
     fs             = require('fs-extra'),
     path           = require('path'),
     pwd            = process.cwd(),
-//     slash          = require('slashjs'),
     Stream         = require('stream'),
     through        = require('through2');
-
-// // Create useful scandir function
-// fs.scandir = co.wrap(function*( dir ) {
-//   var stat, filename, i, src = yield fs.readdir(dir);
-//   var output = [];
-//   for ( i in src ) {
-//     if (!src.hasOwnProperty(i)) continue;
-//     filename = path.join( dir, src[i] );
-//     stat     = yield fs.stat( filename );
-//     if ( stat.isDirectory() ) {
-//       output = output.concat( yield fs.scandir( filename ) );
-//     } else if ( stat.isFile() ) {
-//       output.push( filename );
-//     }
-//   }
-//   return output;
-// });
 
 // Start of the processing stream
 var processor = new Stream.Readable();
@@ -113,17 +95,12 @@ processor
           relpath     = fileObject.filename.slice(pwd.length+1).replace(/\\/g,'/');
       scope = scope.replace(/\[relpath\]/g,relpath);
 
-      process.stdout.write(relpath+":"+docblock.line+" -- ["+scope+"] "+title+"  "+"\n");
+      process.stdout.write(relpath+":"+docblock.line+" -- ["+(docblock.tags.level?(docblock.tags.level.toUpperCase()+':'):'')+scope+"] "+title+"  "+"\n");
       process.stdout.write("   "+description.split("\n").join("\n   ")+"\n");
       process.stdout.write('\n');
     });
     cb();
   }));
-
-  // .pipe(through.obj(function(filename, enc, cb) {
-  //   console.log(arguments);
-  //   cb();
-  // }));
 
 // Recursive push files to the processor
 var toProcess = fs.readdirSync(pwd).map((rp)=>pwd+path.sep+rp);
