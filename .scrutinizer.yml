@@ -8,10 +8,12 @@ build:
           file: 'coverage/clover.xml'
           format: 'clover'
   nodes:
+    tests: true
     analysis:
       tests:
         override:
-          - js-scrutinizer-run
+        - js-scrutinizer-run
+
 
 checks:
   javascript:
