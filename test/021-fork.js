@@ -85,7 +85,7 @@ describe('fork', function() {
     assert.equal(errors[0].level, 'WARN');
   });
 
-  it('fork reporter (defaultLEvel \'warn\')', function * () {
+  it('fork reporter (defaultLevel \'warn\')', function * () {
     var errors   = [],
         reporter = baseReporter.fork({
           reportArr    : errors,

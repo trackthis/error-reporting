@@ -96,7 +96,8 @@ var main = module.exports = function( options ) {
   // Allow forking a.k.a. extending the options
   reporter.fork = function( extraOptions ) {
     if ('string' === typeof extraOptions) extraOptions = {scope: extraOptions};
-    return main(Object.assign({},options,extraOptions));
+    var reporters = [].concat(options.reporters||[], extraOptions.reporters||[]);
+    return main(Object.assign({},options,extraOptions,{reporters}));
   };
 
   // Filtering errors
