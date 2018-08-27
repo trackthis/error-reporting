@@ -19,19 +19,20 @@ var main = module.exports = function( options ) {
     // Minimal sanitation
     if(!reporter) return reporters;
     if('object'!==typeof reporter) return reporters;
+    var result = reporter;
 
     // Array support
     if( Array.isArray(reporter) && (reporter.length === 2) ) {
-      reporter = {
+      result = {
         level   : reporter[0],
         callback: reporter[1],
       };
     }
 
     // Validate components
-    if('function'!==typeof reporter.callback) return reporters;
-    if('string'===typeof reporter.level) reporter.level = main.level[reporter.level.toUpperCase()];
-    if('number'!==typeof reporter.level) return reporters;
+    if('function'!==typeof result.callback) return reporters;
+    if('string'===typeof result.level) result.level = main.level[result.level.toUpperCase()];
+    if('number'!==typeof result.level) return reporters;
 
     // Add to our list
     reporters.push(reporter);
