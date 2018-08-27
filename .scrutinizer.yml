@@ -7,6 +7,12 @@ build:
         coverage:
           file: 'coverage/clover.xml'
           format: 'clover'
+  nodes:
+    analysis:
+      tests:
+        override:
+          - js-scrutinizer-run
+
 checks:
   javascript:
     code_rating: true
