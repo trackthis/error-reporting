@@ -22,10 +22,13 @@
   },
   "devDependencies": {
     "bluebird": "^3.5.1",
+    "co": "^4.6.0",
     "co-mocha": "^1.2.2",
+    "docblock-parser": "^1.0.0",
     "fs-extra": "^7.0.0",
     "jshint": "^2.9.6",
     "mocha": "^5.2.0",
-    "nyc": "^12.0.2"
+    "nyc": "^12.0.2",
+    "through2": "^2.0.3"
   }
 }
