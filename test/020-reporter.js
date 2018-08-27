@@ -70,48 +70,51 @@ describe('creating reporter', function() {
     assert.equal(errors.length, 1);
     assert.equal(errors[0].level, 'ERROR');
   });
-  
-  it('new reporter (level 3) ', function * () {
-    var errors   = [],
-        reporter = tter({
-          scope     : 'test/index.js',
-          reportArr : errors,
-          level     : 3
-        });
-    reporter(2, 'error');
-    reporter(3, 'error');
-    reporter(4, 'error');
-    assert.equal(errors.length, 2);
-  });
-  
-  it('new reporter (level \'debug\')', function * () {
-    var errors   = [],
-        reporter = tter({
-          scope     : 'test/index.js',
-          reportArr : errors,
-          level     : 'debug'
-        });
-    reporter('info', 'error');
-    reporter('debug', 'error');
-    reporter('trace', 'error');
-    assert.equal(errors.length, 2);
-  });
 
-  it('new reporter (custom report funciton)', function * () {
-    var errors   = [],
-        reporter = tter({
-          reportArr : errors,
-          report    : function () {
-            errors.push({
-              test : 'test'
-            });
-          }
-        });
-    reporter('error');
-    assert.equal(errors.length, 2);
-    assert.equal(errors[0].level, 'INFO');
-    assert.equal(errors[1].test, 'test');
-  });
+  // // Removed functionality
+  // it('new reporter (level 3) ', function * () {
+  //   var errors   = [],
+  //       reporter = tter({
+  //         scope     : 'test/index.js',
+  //         reportArr : errors,
+  //         level     : 3
+  //       });
+  //   reporter(2, 'error');
+  //   reporter(3, 'error');
+  //   reporter(4, 'error');
+  //   assert.equal(errors.length, 2);
+  // });
+
+  // // Removed functionality
+  // it('new reporter (level \'debug\')', function * () {
+  //   var errors   = [],
+  //       reporter = tter({
+  //         scope     : 'test/index.js',
+  //         reportArr : errors,
+  //         level     : 'debug'
+  //       });
+  //   reporter('info', 'error');
+  //   reporter('debug', 'error');
+  //   reporter('trace', 'error');
+  //   assert.equal(errors.length, 2);
+  // });
+
+  // // Removed functionality
+  // it('new reporter (custom report funciton)', function * () {
+  //   var errors   = [],
+  //       reporter = tter({
+  //         reportArr : errors,
+  //         report    : function () {
+  //           errors.push({
+  //             test : 'test'
+  //           });
+  //         }
+  //       });
+  //   reporter('error');
+  //   assert.equal(errors.length, 2);
+  //   assert.equal(errors[0].level, 'INFO');
+  //   assert.equal(errors[1].test, 'test');
+  // });
 
   /* end test */
 });
