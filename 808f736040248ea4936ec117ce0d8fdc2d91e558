@@ -1,0 +1,5 @@
+[ver:1,total:60]
+test/021-fork.js:15,1535367600:15,m
+example.js:15,1535367600:15,r
+test/020-reporter.js:15,1535367600:15,r
+.gtm/terminal.app:15,1535367600:15,r
