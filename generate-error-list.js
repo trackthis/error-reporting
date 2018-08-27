@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// // Save pwd & load modules
+// Save pwd & load modules
 var co             = require('co'),
     docblockParser = require('docblock-parser'),
     fs             = require('fs-extra'),
