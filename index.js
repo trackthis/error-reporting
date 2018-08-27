@@ -2,12 +2,16 @@ var main = module.exports = function( options ) {
 
   // Sanitize our inputs
   if ('string' === typeof options) { options = {scope: options}; }
-  if ('object' !== options) options = {};
+  if ('object' !== typeof options) options = {};
   options = options || {};
 
   // Make the scope clear & track errors
-  options.scope     = options.scope || '';
-  options.reportArr = Array.isArray(options.reportArr) ? options.reportArr : false;
+  options.scope        = options.scope || '';
+  options.reportArr    = Array.isArray(options.reportArr) ? options.reportArr : false;
+  options.defaultLevel = options.defaultLevel || 'INFO';
+  if('number'===typeof options.defaultLevel) options.defaultLevel = main.level[options.defaultLevel];
+  options.defaultLevel = options.defaultLevel.toUpperCase();
+  if(!(options.defaultLevel in main.level)) options.defaultLevel = 'INFO';
 
   // Sanitize the reporters
   options.reporters = (options.reporters||[]).reduce(function(reporters,reporter) {
@@ -34,6 +38,7 @@ var main = module.exports = function( options ) {
   function report( message ) {
     var txtLevel = main.level[message.level],
         msg      = Object.assign({},message,{level:txtLevel});
+    // console.log(options);
     if(options.reportArr) options.reportArr.push(msg);
     options.reporters.forEach(function(reporter) {
       if ( reporter.level <= message.level ) return;
@@ -42,8 +47,15 @@ var main = module.exports = function( options ) {
   }
 
   // What we're returning to the caller
-  var reporter = function(message) {
-    return reporter.info({stack:cleanStack(new Error().stack),message});
+  var reporter = function( level, message ) {
+    if('undefined'===typeof message) {
+      message = level;
+      level   = options.defaultLevel;
+    }
+    if('number'===typeof level) level = main.level[level];
+    if('string'!==typeof level) level = options.defaultLevel;
+    if(!(level.toUpperCase() in main.level)) level = options.defaultLevel;
+    return reporter[level.toLowerCase()]({stack:cleanStack(new Error().stack),message});
   };
 
   // The common action for all levels
