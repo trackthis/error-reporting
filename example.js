@@ -1,6 +1,6 @@
 var reporter = require('./index')({
   scope: 'example',
-  reporters: [{ level: 'INFO', callback: console.log }]
+  reporters: [[ 'INFO', console.log ]]
 });
 
 
