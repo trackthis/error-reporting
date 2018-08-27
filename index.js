@@ -59,7 +59,7 @@ var main = module.exports = function( options ) {
     stack = stack.split("\n");
     stack.shift(); // Error
     stack.shift(); //   at index.js:<N>
-    return ['Error'].concat(stack).join("\n");
+    return stack.join("\n");
   }
 
   // Reports a sanitized message to all listeners
